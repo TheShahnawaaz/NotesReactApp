@@ -14,7 +14,7 @@ app.use(express.json());
 
 
 app.use(cors({
-    origin: ['http://localhost:3000', 'https://your-production-domain.com', 'https://another-allowed-domain.com']
+    origin: ['http://localhost:3000', 'https://notes-frontend-hug2.onrender.com', 'https://another-allowed-domain.com']
 }));
 
 
