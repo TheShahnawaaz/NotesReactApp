@@ -14,7 +14,7 @@ app.use(express.json());
 
 
 app.use(cors({
-    origin: ['http://localhost:3000', 'https://notes-frontend-hug2.onrender.com', 'https://notes-react-37i2gvoej-theshahnawaaz.vercel.app']
+    origin: ['http://localhost:3000', 'https://notes-frontend-hug2.onrender.com', 'https://notes-react-37i2gvoej-theshahnawaaz.vercel.app','https://notes-react-app-theshahnawaaz.vercel.app']
 }));
 
 
