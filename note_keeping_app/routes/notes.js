@@ -1,16 +1,13 @@
-// routes/notes.js
-
 const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 
-const auth = require('../middleware/auth'); // Assume you have an auth middleware to validate tokens
+const auth = require('../middleware/auth'); // Ensure this middleware is correctly set up for JWT verification
 const Note = require('../models/Note');
-const User = require('../models/User');
 
-// @route    POST api/notes
-// @desc     Create a note
-// @access   Private
+// @route POST api/notes
+// @desc Create a note
+// @access Private
 router.post('/', [auth, [
     check('title', 'Title is required').not().isEmpty(),
     check('content', 'Content cannot be empty').not().isEmpty()
@@ -21,11 +18,10 @@ router.post('/', [auth, [
     }
 
     try {
-        const user = await User.findById(req.user.id).select('-password');
         const newNote = new Note({
             title: req.body.title,
             content: req.body.content,
-            user: user.id
+            user: req.user.id // Assuming req.user is set by the auth middleware
         });
 
         const note = await newNote.save();
@@ -35,12 +31,6 @@ router.post('/', [auth, [
         res.status(500).send('Server Error');
     }
 });
-
-// Additional routes for GET, PUT, and DELETE would be implemented similarly,
-// ensuring they are authenticated and operate on the user's notes.
-// routes/notes.js
-
-// Assuming you've already set up express, router, and other imports at the top
 
 // GET all notes for the authenticated user
 router.get('/', auth, async (req, res) => {
@@ -52,8 +42,6 @@ router.get('/', auth, async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
-
-
 
 // GET one note using id
 router.get('/:id', auth, async (req, res) => {
@@ -70,11 +58,12 @@ router.get('/:id', auth, async (req, res) => {
         res.json(note);
     } catch (err) {
         console.error(err.message);
+        if (err.kind === 'ObjectId') {
+            return res.status(404).json({ msg: 'Note not found' });
+        }
         res.status(500).send('Server Error');
     }
 });
-
-
 
 // PUT update a note
 router.put('/:id', [auth, [
@@ -87,7 +76,6 @@ router.put('/:id', [auth, [
     }
 
     const { title, content } = req.body;
-
     try {
         let note = await Note.findById(req.params.id);
 
@@ -99,13 +87,16 @@ router.put('/:id', [auth, [
         }
 
         note = await Note.findByIdAndUpdate(req.params.id, { $set: { title, content } }, { new: true });
-
         res.json(note);
     } catch (err) {
         console.error(err.message);
+        if (err.kind === 'ObjectId') {
+            return res.status(404).json({ msg: 'Note not found' });
+        }
         res.status(500).send('Server Error');
     }
 });
+
 // DELETE a note
 router.delete('/:id', auth, async (req, res) => {
     try {
@@ -119,13 +110,14 @@ router.delete('/:id', auth, async (req, res) => {
         }
 
         await Note.findByIdAndDelete(req.params.id);
-
         res.json({ msg: 'Note removed' });
     } catch (err) {
         console.error(err.message);
+        if (err.kind === 'ObjectId') {
+            return res.status(404).json({ msg: 'Note not found' });
+        }
         res.status(500).send('Server Error');
     }
 });
-
 
 module.exports = router;
