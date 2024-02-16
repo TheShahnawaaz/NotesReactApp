@@ -27,10 +27,10 @@ const AuthProvider = ({ children }) => {
                 setCurrentUser(null);
             } finally {
                 // set after two seconds
-                setTimeout(() => {
-                    setLoading(false);
-                }, 2000);
-                // setLoading(false); // Set loading to false once the check is complete
+                // setTimeout(() => {
+                //     setLoading(false);
+                // }, 2000);
+                setLoading(false); // Set loading to false once the check is complete
             }
         };
 
