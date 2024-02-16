@@ -92,7 +92,7 @@ router.post('/signup', [
             res.cookie('token', token, {
                 httpOnly: true,
                 secure: true, // set to true if using https
-                sameSite: 'strict',
+                sameSite: 'None',
                 maxAge: 18000000,
             }).json({ username: user.username });
         });
@@ -136,7 +136,7 @@ router.post('/login', loginLimiter, [
             res.cookie('token', token, {
                 httpOnly: true,
                 secure: true, // set to true if using https
-                sameSite: 'strict',
+                sameSite: 'None',
                 maxAge: 18000000,
             }).json({ username: user.username });
         });
@@ -152,7 +152,7 @@ router.post('/logout', (req, res) => {
         httpOnly: true,
         expires: new Date(0), // Set the cookie to expire immediately
         secure: true, // Set to true if you're using HTTPS, adjust according to your environment
-        sameSite: 'strict', // Adjust according to your requirements
+        sameSite: 'None', // Adjust according to your requirements
     }).sendStatus(200); // Send a 200 OK status to indicate successful logout
 });
 
