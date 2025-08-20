@@ -3,18 +3,11 @@ import React from 'react';
 import { Card, Button, Icon } from 'semantic-ui-react';
 // Add to the existing NoteItem imports
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
 
 const NoteItem = ({ note }) => {
 
     // Inside NoteItem component, before return statement
-    const { currentUser } = useAuth();
     const navigate = useNavigate();
-
-    // Placeholder functions for edit and delete actions
-    const handleEdit = () => {
-        console.log('Edit Note:', note.id);
-    };
 
     const handleDelete = async (noteId) => { // Ensure noteId is passed as an argument
 

@@ -9,7 +9,7 @@ import Home from './components/Home';
 import { useAuth } from './contexts/AuthContext';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
-import { Container } from 'semantic-ui-react';
+
 import LoadingPage from './components/layout/LoadingPage';
 
 const App = () => {
