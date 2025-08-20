@@ -1,6 +1,6 @@
 // src/components/notes/NotesList.js
 import React, { useEffect, useState } from 'react';
-import { Card, Container, Header, Segment, Loader, Button } from 'semantic-ui-react';
+import { Card, Container, Header, Segment, Button } from 'semantic-ui-react';
 import NoteItem from './NoteItem'; // We will create this component next
 import { useAuth } from '../../contexts/AuthContext';
 import { Link } from 'react-router-dom';

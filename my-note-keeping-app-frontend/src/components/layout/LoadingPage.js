@@ -1,6 +1,5 @@
 import React from 'react';
 import { Placeholder, Segment, Container } from 'semantic-ui-react';
-import Header from './Header'; // Import Header
 import Footer from './Footer'; // Import Footer
 
 const LoadingPage = () => {
